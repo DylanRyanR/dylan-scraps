@@ -14,13 +14,14 @@ def get_magnet_link(text):
     else:
         return None
 
+
 # 获取解析详情
 def get_liuli_info(soup):
     item = {}
     all_content = ''
     bt_link = ''
     articles = soup.find('div', id='main')
-    if articles != ''  and articles is not None:
+    if articles != '' and articles is not None:
         content = articles.find('div', class_='entry-content')
         if content != '' and content is not None:
             p_list = content.find_all('p')
@@ -31,7 +32,7 @@ def get_liuli_info(soup):
                     bt_link = link
     print(bt_link)
     print(all_content)
-    item = {'btLink': bt_link, 'allContent': all_content}
+    item = {'btLink': bt_link, 'name': all_content}
     return item
 
 
@@ -44,5 +45,3 @@ if __name__ == '__main__':
         print("未查询到相关内容")
 
     # print(get_magnet_link('0e6180cz57090f8088f6aa4a48d305220d3a936c'))
-
-
