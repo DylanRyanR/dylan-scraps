@@ -2,7 +2,9 @@ FROM tiangolo/uvicorn-gunicorn:python3.10
 
 LABEL maintainer="DylanRyan <414200173@qq.com>"
 
-RUN pip install -r requirements.txt
+COPY ./requirements.txt /requirements.txt
+
+RUN pip install -r /requirements.txt
 
 WORKDIR /app
 
