@@ -1,0 +1,50 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Upload Python Package
+
+on:
+  # 手动触发事件
+  workflow_dispatch:
+    inputs:
+      # logLevel:
+      #   description: 'Log level'
+      #   required: true
+      #   default: 'warning'
+      tags:
+        description: 'Docker tags'
+        default: 'latest'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+    - name: Login to Aliyun Container Registry (ACR)
+      uses: aliyun/acr-login@v1 # 使用阿里云镜像服务action
+      with:
+        login-server: registry.cn-hangzhou.aliyuncs.com # 务必正确填写镜像容器服务的登录地址
+        region-id: cn-hangzhou # 务必正确填写镜像容器服务的登录地址
+        username: ${{ secrets.ALI_REPO }}
+        password: ${{ secrets.ALI_REPO_PWD }}
+    # build image and push to ACR
+    - name: Build and Push Docker Image
+      env:
+        IMAGE_TAG: ${{ github.event.inputs.tags }} # 用于标记容器版本号
+      run: |
+        docker build -t registry.cn-hangzhou.aliyuncs.com/dylan-ryan/dylan-scrap:$IMAGE_TAG .
+        docker push registry.cn-hangzhou.aliyuncs.com/dylan-ryan/dylan-scrap:$IMAGE_TAG
