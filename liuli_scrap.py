@@ -43,7 +43,7 @@ def get_news_list(soup):
         print('跳转链接:', link)
         print('\n')
 
-        info_item = {'title': title, 'publish_time': publish_time, 'author': author, 'img_link': image, 'desc': description, 'cat': cat, 'tag': tag, 'link': link}
+        info_item = {'title': title, 'publishTime': publish_time, 'author': author, 'imgLink': image, 'desc': description, 'cat': cat, 'tags': tag, 'infoLink': link}
         info_list.append(info_item)
 
     return info_list
