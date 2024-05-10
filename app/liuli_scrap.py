@@ -4,7 +4,11 @@ from bs4 import BeautifulSoup
 
 # 提取内容
 def get_request_content(url):
-    response = requests.get(url)
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'
+    }
+    response = requests.get(url, headers=headers)
+    response.encoding = 'UTF-8'
     soup = BeautifulSoup(response.text, 'html.parser')
     return soup
 
