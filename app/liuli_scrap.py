@@ -25,7 +25,10 @@ def get_news_list(soup):
         title = title.text
         publish_time = article.find('time', class_='entry-date').text
         author = article.find('span', class_='author vcard').text
-        image = article.find('img')['src']
+        image_origin = article.find('img')
+        image = ''
+        if image_origin is not None:
+            image = image_origin['src']
         description = article.find('div', class_='entry-content').text
         cat = ''
         cat_origin = article.find('span', class_='cat-links')
