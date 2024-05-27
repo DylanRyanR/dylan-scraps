@@ -5,9 +5,10 @@ import liuli_scrap
 
 def get_magnet_link(text):
     pattern = r'[0-9a-zA-Z]{40}'
-    match = re.search(pattern, text)
+    match = re.findall(pattern, text)
     if match:
-        return match.group()
+        result = ''.join(match)
+        return result
     else:
         return None
 
@@ -23,8 +24,8 @@ def get_liuli_info(soup):
         if content != '' and content is not None:
             p_list = content.find_all('p')
             for p in p_list:
-                all_content = all_content + p.text
-                link = get_magnet_link(p.text)
+                all_content = all_content + str(p)
+                link = get_magnet_link(str(p))
                 if link is not None:
                     bt_link = link
     print(bt_link)
